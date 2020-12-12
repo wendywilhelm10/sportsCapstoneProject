@@ -1,0 +1,83 @@
+.navbar {
+	background-color: aquamarine;
+	background-size: 100% 100%;
+	height: 75px;
+}
+
+.nav.navbar-nav.navbar-right {
+	position: absolute;
+	right: 24px;
+}
+
+.pics {
+	background-size: 100% 100%;
+	height: 200px;
+}
+
+.middle-data {
+	padding: 50px;
+}
+
+#signup {
+	margin-top: 20px;
+}
+
+.pick-dropdown {
+	margin-top: 20px;
+}
+
+h1 {
+	margin-top: 10px;
+}
+
+li {
+	margin-left: 10px;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+.show-right {
+	float: right;
+}
+
+.card-info {
+	display: inline;
+}
+
+.note-btn {
+	display: inline;
+	margin-bottom: 25px;
+}
+
+.info-btn {
+	margin-right: 10px;
+}
+
+.table {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.games {
+	text-align: center;
+}
+
+.stadium {
+	margin-top: 20px;
+}
+
+.notes {	
+	display: block;
+	/* margin-left: 800px; */
+}
+
+textarea {
+	display: block;
+	margin: 0 auto;
+}
+
+.menu {
+	margin-left: 100px;
+}

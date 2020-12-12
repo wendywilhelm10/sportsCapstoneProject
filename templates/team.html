@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Information</title>
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/popper"></script>
+    <script src="https://unpkg.com/bootstrap"></script>
+
+    <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+</head>
+<body>
+    
+<main id="content">
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid" style='display: contents'>
+            <h2>The Sports App</h2>
+            <i class="fas fa-baseball-ball fa-2x menu"></i>
+            <i class="fas fa-golf-ball fa-2x menu"></i>
+            <i class="fas fa-futbol fa-2x menu"></i>
+            <i class="fas fa-football-ball fa-2x menu"></i>
+            <i class="fas fa-basketball-ball fa-2x menu"></i>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not g.user %}
+                <li><a href="/signup">Sign up</a></li>
+                <li><a href="/login">Log in</a></li>
+                {% else %}
+                <li><a href="/logout">Log out</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% for category, msg in get_flashed_messages(with_categories=true) %}
+    <div class="alert alert-{{category}}">{{ msg }}</div>
+    {% endfor %}
+
+    <div class='container'>
+        <div class='text-center'>
+            <img src="{{ team.logo_pic }}" alt="{{ team.name }}">
+        </div>
+    </div>
+
+    <table class='table table-bordered table-sm'>
+        <thead>
+            <tr>
+                <th class='games' colspan='5'>Last Five Games</th>
+                <th class='games' colspan='4'>Next Five Games</th>
+            </tr>
+            <tr>
+                <th>Away Team</th>
+                <th>Score</th>
+                <th>Home Team</th>
+                <th>Score</th>
+                <th>Date</th>
+                <th>Away Team</th>
+                <th>Home Team</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+
+            {% for i in range(5) %}
+            <tr>
+                {% if last_five is not none and last_five|length >= i+1 %}
+                    {% if team.name == last_five[i].strAwayTeam %}
+                        <td><b>{{ last_five[i].strAwayTeam }}</b></td>
+                        <td>{{ last_five[i].intAwayScore }}</td>
+                        <td>{{ last_five[i].strHomeTeam }}</td>
+                    {% else %}
+                        <td>{{ last_five[i].strAwayTeam }}</td>
+                        <td>{{ last_five[i].intAwayScore }}</td>
+                        <td><b>{{ last_five[i].strHomeTeam }}</b></td>
+                    {% endif %}
+
+                    <td>{{ last_five[i].intHomeScore }}</td>
+                    <td>{{ last_five[i].dateEvent }}</td>
+                {% else %}
+                    <td><td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+
+                {% if next_five is not none and next_five|length >= i+1 %}
+                    {% if team.name == next_five[i].strAwayTeam  %}
+                        <td><b>{{ next_five[i].strAwayTeam }}</b></td>
+                        <td>{{ next_five[i].strHomeTeam }}</td>
+                    {% else %}
+                        <td>{{ next_five[i].strAwayTeam }}</td>
+                        <td><b>{{ next_five[i].strHomeTeam }}</b></td>
+                    {% endif %}
+
+                    <td>{{ next_five[i].dateEvent }}</td>
+                    <td>{{ next_five[i].strTime }}</td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </thead>
+    </table>
+
+    {% if team_info[0].strStadiumThumb %}
+    <h3 class='stadium text-center'>{{ team_info[0].strStadium }}</h3>
+    <div class='text-center'>
+        <img src="{{ team_info[0].strStadiumThumb }}" alt="{{ team_info[0].strStadium }}">
+    </div>
+    {% endif %}
+
+    {% if team_info[0].strStadiumDescription %}
+    <div class='container'>
+        <div class='text_center'>
+            <p class='stadium'>{{ team_info[0].strStadiumDescription }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class='container'>
+        <hr>
+    </div>
+
+    {% if team_info[0].strDescriptionEN %}
+    <div class='container'>
+        <h3 class='text-center'>Information about the team:</h3>
+        <div class='text-center'>
+            <p>{{ team_info[0].strDescriptionEN }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class='container text-center'>
+        <label for='notes' id='notes'>Notes on {{ team.name }}:</label>
+        {% if user_team.notes is none %}
+            <textarea name='notes' rows='10' cols='50' id='ta'></textarea>
+        {% else %}
+            <textarea name='notes' rows='10' cols='50' id='ta'>{{ user_team.notes }}</textarea>
+        {% endif %}
+        <button class='btn btn-primary note-btn' id='saveNote' data-id='{{ user_team.id }}'>Save</button>
+        <form action="/home" class='note-btn'>
+            <button class='btn btn-secondary note-btn'>Back</button>
+        </form>
+    </div>
+
+    <button class="btn" id="addSport" style="display:hidden;"></button>
+    <button class="btn" id="addLeague" style="display: hidden;"></button>
+    
+</main>
+
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

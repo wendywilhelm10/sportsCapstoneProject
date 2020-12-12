@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/popper"></script>
+    <script src="https://unpkg.com/bootstrap"></script>
+
+    <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+</head>
+<body>
+
+<main id="content">
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid" style='display: contents'>
+            <h2>The Sports App</h2>
+            <i class="fas fa-baseball-ball fa-2x menu"></i>
+            <i class="fas fa-golf-ball fa-2x menu"></i>
+            <i class="fas fa-futbol fa-2x menu"></i>
+            <i class="fas fa-football-ball fa-2x menu"></i>
+            <i class="fas fa-basketball-ball fa-2x menu"></i>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not g.user %}
+                <li><a href="/signup">Sign up</a></li>
+                <li><a href="/login">Log in</a></li>
+                {% else %}
+                <li><a href="/logout">Log out</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% for category, msg in get_flashed_messages(with_categories=true) %}
+    <div class="alert alert-{{category}}">{{ msg }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+
+    <div class="row row-cols-1 row-cols-md-3 pick-dropdown">
+        {% for sport in sports %}
+        
+            <div class="col mb-4">
+              <h3>{{ sport.sport }}</h3>
+              <h2>{{ sport.league }}</h2>
+              <div class="card">
+                <img src="{{ sport.team_logo }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ sport.team }}</h5>
+                  <p class="card-text">{{ sport.stadium }}
+                      <p class="card-info">{% if sport.twitter %} 
+                          <a href="{{ sport.twitter }}"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if sport.facebook %}
+                          <a href="{{ sport.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if sport.instagram %}
+                          <a href="{{ sport.instagram }}"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                      </p>
+                      <p class="card-info">
+                        <button class='btn btn-danger show-right delete-team' data-ut='{{ sport.userteam }}'>Delete</button>
+                      </p>
+                      <form action="/home/user_team" method='POST' class="card-info show-right info-btn">
+                        <input type="hidden" name="user_team_id" value="{{ sport.userteam }}">
+                        <button class='btn btn-primary'>More Info/Notes</button>
+                      </form>
+                  </p>
+                </div>
+              </div>
+            </div>
+        
+        {% endfor %}
+    </div>
+    
+</main>
+
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
+

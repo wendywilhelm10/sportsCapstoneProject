@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Sports App{% endblock %}
+{% block content %}
+
+<div>
+    <h1>Pick a favorite league.</h1>
+</div>
+
+<h3>Sport: {{ sport }}</h3>
+
+<div class='pick-dropdown'>
+<form method='POST'>
+    {{ form.hidden_tag() }}
+
+    {{ form.league.label }}
+    {{ form.league }}
+
+    {{ form.leagueName }}
+    <button class="btn btn-success btn-sm" id="addLeague" data-item="league">Add League</button>
+    <button class="btn" id="addSport" style="display: hidden;"></button>
+    <button class="btn" id="saveNote" style="display: hidden;"></button>
+</form>
+</div>
+
+{% endblock %}
