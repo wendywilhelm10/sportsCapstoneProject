@@ -54,7 +54,8 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ sport.team }}</h5>
                   <p class="card-text">{{ sport.stadium }}
-                      <p class="card-info">{% if sport.twitter %} 
+                      <p class="card-info">
+                        {% if sport.twitter %} 
                           <a href="{{ sport.twitter }}"><i class="fab fa-twitter"></i></a>
                         {% endif %}
                         {% if sport.facebook %}
@@ -62,6 +63,9 @@
                         {% endif %}
                         {% if sport.instagram %}
                           <a href="{{ sport.instagram }}"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if sport.website %}
+                          <a href="{{ sport.website }}">Website</a>
                         {% endif %}
                       </p>
                       <p class="card-info">

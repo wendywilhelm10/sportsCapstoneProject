@@ -2,21 +2,23 @@
 {% block title %}Sports App{% endblock %}
 {% block content %}
 
-<div>
-    <h1>Pick a favorite team.</h1>
-</div>
+<div class='heading'>
+    <div>
+        <h1>Pick a favorite team.</h1>
+    </div>
 
-<h3>Sport: {{ sport }}</h3>
-<h3>League: {{ league }}</h3>
+    <h3>Sport: {{ sport }}</h3>
+    <h3>League: {{ league }}</h3>
 
-<div class='pick-dropdown'>
-<form method='POST'>
-    {{ form.hidden_tag() }}
+    <div class='pick-dropdown'>
+    <form method='POST'>
+        {{ form.hidden_tag() }}
 
-    {{ form.team.label }}
-    {{ form.team }}
-    <button class="btn btn-success btn-sm" id="addTeam">Add Team</button>
-</form>
-</div>
+        {{ form.team.label }}
+        {{ form.team }}
+        <button class="btn btn-primary btn-sm" id="addTeam">Add Team</button>
+    </form>
+    </div>
+    </div>
 
 {% endblock %}

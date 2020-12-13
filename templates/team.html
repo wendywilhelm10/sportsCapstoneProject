@@ -115,6 +115,10 @@
     <div class='text-center'>
         <img src="{{ team_info[0].strStadiumThumb }}" alt="{{ team_info[0].strStadium }}">
     </div>
+    {% else %}
+        {% if team_info[0].strStadiumDescription %}
+            <h3 class='stadium text-center'>Stadium Information:</h3>
+        {% endif %}
     {% endif %}
 
     {% if team_info[0].strStadiumDescription %}
