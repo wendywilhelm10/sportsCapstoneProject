@@ -250,6 +250,11 @@ def delete_team(id):
 
 @app.route('/api/save/<int:id>', methods=['POST'])
 def save_note(id):
+
+    if not g.user:
+        flash('You are not logged in', 'danger')
+        return redirect('/')
+        
     req = json.loads(request.data)
     notes = req['notes']
 
