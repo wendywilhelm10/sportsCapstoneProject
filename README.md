@@ -14,7 +14,7 @@ When the user logs back in, the teams they have chosen to follow will appear whe
 
 Here is what the page looks like for a user after they log in and have teams they are following:
 
-![Sports App main page after logging in](sportsApp.png) 
+![Sports App main page after logging in](https://raw.githubusercontent.com/wendywilhelm10/sportsCapstoneProject/master/sportsApp.PNG) 
 
 
 The API I used for this project is this url: [Sports App API](https://www.thesportsdb.com/api.php)
