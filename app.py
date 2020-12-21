@@ -2,9 +2,10 @@
 from flask import Flask, request, render_template, flash, session, redirect, g, json
 from models import db, connect_db, User, Sport, UserSport, League, UserLeague, Team, UserTeam
 from sqlalchemy.exc import IntegrityError
-from funcs import get_teams_following, add_team, get_teams, get_leagues
+from funcs import get_teams_following, add_team, get_teams, get_leagues, convertDate
 
 from forms import UserAddForm, UserForm, AddSportForm, AddLeagueForm, AddTeamForm
+# from datetime import datetime
 import requests
 
 CURR_USER = "curr_user"
@@ -179,9 +180,6 @@ def show_team():
         flash('You are not logged in', 'danger')
         return redirect('/')
 
-    # import pdb
-    # pdb.set_trace()
-
     user_team_id = request.form['user_team_id']
 
     user_team = UserTeam.query.get_or_404(user_team_id)
@@ -193,11 +191,13 @@ def show_team():
 
     res = requests.get(f'{API_BASE_URL}/eventslast.php?id={team.id}')
     data = res.json()
-    last_five = data['results']
+    lfive = data['results']
+    last_five = convertDate(lfive)
 
     res = requests.get(f'{API_BASE_URL}/eventsnext.php?id={team.id}')
     data = res.json()
-    next_five = data['events']
+    nfive = data['events']
+    next_five = convertDate(nfive)
 
     return render_template('team.html', team=team, last_five=last_five, next_five=next_five, team_info=team_info, user_team=user_team)
 

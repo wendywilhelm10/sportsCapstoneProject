@@ -85,3 +85,11 @@ textarea {
 .menu {
 	margin-left: 100px;
 }
+
+.win {
+	color: green;
+}
+
+.loss {
+	color: red;
+}

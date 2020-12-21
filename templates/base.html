@@ -56,16 +56,16 @@
                   <p class="card-text">{{ sport.stadium }}
                       <p class="card-info">
                         {% if sport.twitter %} 
-                          <a href="{{ sport.twitter }}"><i class="fab fa-twitter"></i></a>
+                          <a href="https://{{ sport.twitter }}"><i class="fab fa-twitter"></i></a>
                         {% endif %}
                         {% if sport.facebook %}
-                          <a href="{{ sport.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                          <a href="https://{{ sport.facebook }}"><i class="fab fa-facebook-f"></i></a>
                         {% endif %}
                         {% if sport.instagram %}
-                          <a href="{{ sport.instagram }}"><i class="fab fa-instagram"></i></a>
+                          <a href="https://{{ sport.instagram }}"><i class="fab fa-instagram"></i></a>
                         {% endif %}
                         {% if sport.website %}
-                          <a href="{{ sport.website }}">Website</a>
+                          <a href="https://{{ sport.website }}">Website</a>
                         {% endif %}
                       </p>
                       <p class="card-info">

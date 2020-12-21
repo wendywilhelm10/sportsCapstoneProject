@@ -1,5 +1,6 @@
 from flask import Flask, session, g
 from models import db, User, Sport, UserSport, League, UserLeague, Team, UserTeam
+from datetime import datetime
 import requests
 
 API_BASE_URL = "https://www.thesportsdb.com/api/v1/json/1"
@@ -32,9 +33,6 @@ def get_teams(teams, league):
 
         if league_id:
             user_teams = UserTeam.query.filter(UserTeam.user_league_id==f'{league_id.id}').all()
-
-    # import pdb
-    # pdb.set_trace()
 
     for team in teams:
         add_to_list = True
@@ -143,3 +141,15 @@ def add_team():
     user_team = UserTeam(team_api_id=team.id, user_league_id=user_league_id)
     db.session.add(user_team)
     db.session.commit()
+
+def convertDate(games):
+
+    for i in range(len(games)):
+        dteEvt = games[i]['dateEvent']
+        d = datetime.strptime(dteEvt, '%Y-%m-%d').strftime('%B %d, %Y')
+        games[i]['dateEvent'] = d
+        tmeEvt = games[i]['strTime']
+        t = datetime.strptime(tmeEvt, '%H:%M:%S').strftime('%I:%M %p')
+        games[i]['strTime'] = t
+
+    return games

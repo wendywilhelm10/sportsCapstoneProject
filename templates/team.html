@@ -50,7 +50,7 @@
     <table class='table table-bordered table-sm'>
         <thead>
             <tr>
-                <th class='games' colspan='5'>Last Five Games</th>
+                <th class='games' colspan='6'>Last Five Games</th>
                 <th class='games' colspan='4'>Next Five Games</th>
             </tr>
             <tr>
@@ -58,6 +58,7 @@
                 <th>Score</th>
                 <th>Home Team</th>
                 <th>Score</th>
+                <th>W/L</th>
                 <th>Date</th>
                 <th>Away Team</th>
                 <th>Home Team</th>
@@ -69,19 +70,36 @@
             <tr>
                 {% if last_five is not none and last_five|length >= i+1 %}
                     {% if team.name == last_five[i].strAwayTeam %}
+                        {% set away = True %}
                         <td><b>{{ last_five[i].strAwayTeam }}</b></td>
                         <td>{{ last_five[i].intAwayScore }}</td>
                         <td>{{ last_five[i].strHomeTeam }}</td>
                     {% else %}
+                        {% set away = False %}
                         <td>{{ last_five[i].strAwayTeam }}</td>
                         <td>{{ last_five[i].intAwayScore }}</td>
                         <td><b>{{ last_five[i].strHomeTeam }}</b></td>
                     {% endif %}
 
                     <td>{{ last_five[i].intHomeScore }}</td>
+
+                    {% if away %}
+                        {% if last_five[i].intAwayScore | int > last_five[i].intHomeScore | int %}
+                            <td class='win'><b>W</b></td>
+                        {% else %}
+                            <td class='loss'><b>L</b></td>
+                        {% endif %}
+                    {% else %}
+                        {% if last_five[i].intHomeScore | int > last_five[i].intAwayScore | int %}
+                            <td class='win'><b>W</b></td>
+                        {% else %}
+                            <td class='loss'><b>L</b></td>
+                        {% endif %}
+                    {% endif %}
                     <td>{{ last_five[i].dateEvent }}</td>
                 {% else %}
-                    <td><td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
