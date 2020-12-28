@@ -5,7 +5,6 @@ from sqlalchemy.exc import IntegrityError
 from funcs import get_teams_following, add_team, get_teams, get_leagues, convertDate
 
 from forms import UserAddForm, UserForm, AddSportForm, AddLeagueForm, AddTeamForm
-# from datetime import datetime
 import requests
 
 CURR_USER = "curr_user"
@@ -20,10 +19,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = 'mysecretsports'
 
 connect_db(app)
-
-# db.drop_all()
-# db.create_all()
-
 
 @app.before_request
 def add_user_to_g():
@@ -192,12 +187,18 @@ def show_team():
     res = requests.get(f'{API_BASE_URL}/eventslast.php?id={team.id}')
     data = res.json()
     lfive = data['results']
-    last_five = convertDate(lfive)
+    if lfive:
+        last_five = convertDate(lfive)
+    else:
+        last_five = lfive
 
     res = requests.get(f'{API_BASE_URL}/eventsnext.php?id={team.id}')
     data = res.json()
     nfive = data['events']
-    next_five = convertDate(nfive)
+    if nfive:
+        next_five = convertDate(nfive)
+    else:
+        next_five = nfive
 
     return render_template('team.html', team=team, last_five=last_five, next_five=next_five, team_info=team_info, user_team=user_team)
 
